@@ -99,14 +99,25 @@ const val DEVELOPER_PLAY_STORE_URL = "https://play.google.com/store/apps/dev?id=
 const val FAKE_VERSION_APP_LABEL =
     "You are using a fake version of the app. For your own safety download the original one from www.fossify.org. Thanks"
 
+@Suppress("UNUSED_PARAMETER")
 fun Context.fakeVersionCheck(
     showConfirmationDialog: () -> Unit
 ) {
-    if (!packageName.startsWith("org.fossify.", true)) {
-        if ((0..50).random() == 10 || baseConfig.appRunCount % 100 == 0) {
-            showConfirmationDialog()
-        }
-    }
+}
+
+const val DSREMO_COMMONS_URL = "https://github.com/dsremo/commons"
+const val DSREMO_INTEGRITY_LABEL =
+    "This app is built on dsremo commons — a modified open-source library. If you did not build this yourself, the source is at github.com/dsremo/commons."
+private const val DSREMO_INTEGRITY_NOTICE_SHOWN = "dsremo_integrity_notice_shown"
+
+fun Context.dsremoIntegrityCheck(
+    showConfirmationDialog: () -> Unit
+) {
+    if (packageName.startsWith("com.dsremo.", ignoreCase = true)) return
+    val prefs = getSharedPreferences("Prefs", Context.MODE_PRIVATE)
+    if (prefs.getBoolean(DSREMO_INTEGRITY_NOTICE_SHOWN, false)) return
+    prefs.edit().putBoolean(DSREMO_INTEGRITY_NOTICE_SHOWN, true).apply()
+    showConfirmationDialog()
 }
 
 fun ComponentActivity.appOnSdCardCheckCompose(
