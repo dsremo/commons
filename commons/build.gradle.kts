@@ -11,7 +11,7 @@ plugins {
     `maven-publish`
 }
 
-group = "org.fossify"
+group = "com.github.dsremo"
 version = findProperty("VERSION")?.toString() ?: System.getenv("VERSION") ?: "1.0.0"
 
 android {
