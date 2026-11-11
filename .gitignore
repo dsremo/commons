@@ -9,3 +9,7 @@
 keystore.jks
 keystore.properties
 .kotlin/
+# Signing material and service credentials - never commit
+*.jks
+*.keystore
+google-services.json
