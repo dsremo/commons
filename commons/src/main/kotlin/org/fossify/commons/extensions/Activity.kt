@@ -134,13 +134,10 @@ fun Activity.appLaunched(appId: String) {
     }
 }
 
-fun Activity.showDonateOrUpgradeDialog() {
-    if (getCanAppBeUpgraded()) {
-        UpgradeToProDialog(this)
-    } else if (!isOrWasThankYouInstalled()) {
-        DonateDialog(this)
-    }
-}
+// Both dialogs are upstream's monetisation: DonateDialog asks users to buy Fossify's apps on
+// Play, UpgradeToProDialog sells their Pro build. Neither is ours to ask for. Made a no-op rather
+// than deleted so the dialogs and their strings stay compilable and reversible.
+fun Activity.showDonateOrUpgradeDialog() = Unit
 
 fun Activity.isAppInstalledOnSDCard(): Boolean = try {
     val appInfo = packageManager.getPackageInfo(packageName, 0).applicationInfo
